@@ -1,0 +1,132 @@
+####################################
+# OS / System Files
+####################################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+####################################
+# Environment Variables
+####################################
+.env
+.env.*
+!.env.example
+
+####################################
+# Logs
+####################################
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+####################################
+# Dependency Directories
+####################################
+node_modules/
+bower_components/
+vendor/
+
+####################################
+# Build / Distribution
+####################################
+dist/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.cache/
+.tmp/
+
+####################################
+# Compiled Files
+####################################
+*.exe
+*.dll
+*.so
+*.dylib
+*.class
+
+####################################
+# IDE / Editor Settings
+####################################
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+####################################
+# Testing
+####################################
+coverage/
+.nyc_output/
+test-results/
+
+####################################
+# Package Managers
+####################################
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+####################################
+# Framework-Specific
+####################################
+
+# React
+.eslintcache
+
+# Vue
+.vuepress/dist
+
+# Angular
+.angular/
+.angular-cache/
+
+# Laravel
+/storage/*.key
+/storage/logs/
+bootstrap/cache/
+
+# Django / Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+.venv/
+venv/
+
+####################################
+# Database
+####################################
+*.sqlite
+*.db
+
+####################################
+# Uploads / User Files
+####################################
+uploads/
+media/
+
+####################################
+# Docker
+####################################
+.docker/
+docker-compose.override.yml
+
+####################################
+# Misc
+####################################
+*.bak
+*.tmp
+*.swp
