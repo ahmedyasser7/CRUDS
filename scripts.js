@@ -32,6 +32,7 @@ if (localStorage.product != null) {
     dataPro = [];
 }
 submit.onclick = function () {
+    let countVal = count.value ? Math.abs(parseInt(count.value, 10) || 1) : 1;
     let obj = {
         title: title.value,
         price: price.value,
@@ -39,32 +40,35 @@ submit.onclick = function () {
         ads: ads.value,
         discount: discount.value,
         total: total.innerHTML,
-        count: count.value,
+        count: countVal,
         category: category.value,
     };
-    if (title.value != "" && price.value != "" && category.value != "" && obj.count <= 100) {
+    if (
+        title.value != "" &&
+        price.value != "" &&
+        category.value != "" &&
+        countVal <= 100
+    ) {
         if (mood === "create") {
-            if (obj.count > 1) {
-                for (let i = 0; i < obj.count; i++) {
-                    dataPro.push(obj);
+            if (countVal > 1) {
+                for (let i = 0; i < countVal; i++) {
+                    dataPro.push(Object.assign({}, obj, { count: 1 }));
                 }
             } else {
-                dataPro.push(obj);
+                dataPro.push(Object.assign({}, obj));
             }
-        }
-        else {
+        } else {
             dataPro[tmp] = obj;
             mood = "create";
             submit.innerHTML = "Create";
             count.style.display = "block";
         }
         clearData();
-    }
-    else {
+    } else {
         alert("Please, fill in the required fields");
     }
     localStorage.setItem("product", JSON.stringify(dataPro));
-    
+    readData();
 };
 
 // clear after saving
@@ -94,8 +98,8 @@ function readData() {
             <td>${dataPro[i].discount}</td>
             <td>${dataPro[i].total}</td>
             <td>${dataPro[i].category}</td>
-            <td><button onclick= "updateData(${i})" id="update">update</button></td>
-            <td><button onclick=" deleteData(${i})" id="delete">delete</button></td>
+            <td><button onclick= "updateData(${i})" class="update">update</button></td>
+            <td><button onclick=" deleteData(${i})" class="delete">delete</button></td>
         </tr>
         `;
     }
@@ -107,7 +111,6 @@ function readData() {
     } else {
         document.getElementById("deleteAll").innerHTML = "";
     }
-    readData();
 }
 readData();
 
@@ -119,7 +122,7 @@ function deleteData(i) {
 }
 // delete all
 function deleteAll() {
-    localStorage.clear();
+    localStorage.removeItem("product");
     dataPro.splice(0);
     readData();
 }
@@ -164,7 +167,7 @@ function getSearchMood(id) {
         searchMood = "title";
     } else {
         searchMood = "category";
-    }   
+    }
     search.placeholder = "Search By " + searchMood;
     search.focus();
     search.value = "";
@@ -172,10 +175,11 @@ function getSearchMood(id) {
 }
 
 function searchData(value) {
+    let table = "";
+    let q = String(value || "").toLowerCase();
     for (let i = 0; i < dataPro.length; i++) {
         if (searchMood == "title") {
-            let table = "";
-            if (dataPro[i].title.includes(value.toLowerCase())) {
+            if (String(dataPro[i].title).toLowerCase().includes(q)) {
                 table += `
                         <tr>
                             <td>${i + 1}</td>
@@ -186,14 +190,13 @@ function searchData(value) {
                             <td>${dataPro[i].discount}</td>
                             <td>${dataPro[i].total}</td>
                             <td>${dataPro[i].category}</td>
-                            <td><button onclick= "updateData(${i})" id="update">update</button></td>
-                            <td><button onclick=" deleteData(${i})" id="delete">delete</button></td>
+                            <td><button onclick= "updateData(${i})" class="update">update</button></td>
+                            <td><button onclick=" deleteData(${i})" class="delete">delete</button></td>
                         </tr>
             `;
             }
-        }
-        else {
-            if (dataPro[i].category.includes(value.toLowerCase())) {
+        } else {
+            if (String(dataPro[i].category).toLowerCase().includes(q)) {
                 table += `
                         <tr>
                             <td>${i + 1}</td>
@@ -204,8 +207,8 @@ function searchData(value) {
                             <td>${dataPro[i].discount}</td>
                             <td>${dataPro[i].total}</td>
                             <td>${dataPro[i].category}</td>
-                            <td><button onclick= "updateData(${i})" id="update">update</button></td>
-                            <td><button onclick=" deleteData(${i})" id="delete">delete</button></td>
+                            <td><button onclick= "updateData(${i})" class="update">update</button></td>
+                            <td><button onclick=" deleteData(${i})" class="delete">delete</button></td>
                         </tr>
             `;
             }
